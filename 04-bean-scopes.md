@@ -78,10 +78,3 @@ flowchart TD
     Container -->|"new instance each getBean() call"| P2["Prototype Bean #2"]
     Container -->|"new instance each getBean() call"| P3["Prototype Bean #3"]
 ```
-
-## 4. Interview Notes
-
-- **"Is singleton scope thread-safe automatically?"** → No. One shared instance means shared mutable state is a race-condition risk. Singleton beans should be stateless, or protect any shared state explicitly (locks, atomics, thread-local).
-- **"Does Spring destroy prototype beans?"** → No — the container creates prototype beans but hands off destruction responsibility to you; `@PreDestroy` is *not* called automatically for prototype beans (see file 06 on lifecycle for why this matters).
-- **"Can a singleton bean depend on a prototype bean safely?"** → Not via plain field/constructor injection — you'd get the prototype resolved once and cached inside the singleton forever. Use `ObjectProvider<T>` / `Provider<T>` or method injection to get a fresh instance per use.
-- **"When would you actually reach for `prototype`?"** → Rare in typical CRUD apps — mostly for stateful helper objects like builders, or per-use objects that shouldn't be shared across threads.
