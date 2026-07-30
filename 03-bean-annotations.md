@@ -108,9 +108,3 @@ flowchart TD
     D --> E
 ```
 
-## 4. Interview Notes
-
-- **"Difference between `@Component` and `@Bean`?"** → `@Component` is a class-level annotation for classes you wrote, found via component scanning. `@Bean` is a method-level annotation inside a `@Configuration` class, used when you need to manually construct/configure an object — typically third-party classes you can't annotate directly.
-- **"Difference between `@Service` and `@Repository`?"** → Functionally both are `@Component` under the hood; `@Repository` additionally enables Spring's automatic persistence-exception translation (converts JDBC/JPA exceptions into Spring's unchecked `DataAccessException` hierarchy).
-- **"Can you use `@Bean` for your own classes too?"** → Yes — useful when you need conditional logic or parameters to build the object, not just a plain no-arg constructor.
-- **"What does `@Configuration` do?"** → Marks a class as a source of bean definitions for the container; also makes `@Bean` methods behave so that calling one `@Bean` method from another returns the *same* managed singleton instance rather than creating a new plain object.
