@@ -79,23 +79,7 @@ public class BService {
 
 **Fix 3 — the actual best fix: redesign.** If A needs B and B needs A, extract the shared behavior both need into a third class `C`, and have both A and B depend on `C` instead of each other. This removes the cycle entirely instead of working around it.
 
-## 3. Diagram
-
-```mermaid
-flowchart LR
-    A["AService\n(constructor needs BService)"] -->|needs fully built| B["BService\n(constructor needs AService)"]
-    B -->|needs fully built| A
-    A -. deadlock, container gives up .-> X["BeanCurrentlyInCreationException"]
-```
-
-```mermaid
-sequenceDiagram
-    participant Container
-    participant A as AService
-    participant B as BService
-
-    Container->>A: create raw instance (no deps yet)
-    Container->>B: create raw instance
+stance
     Container->>B: setAService(rawA reference)
     Container->>A: setBService(fully built B)
     Note over A,B: Both fully wired — deadlock avoided because setters run after construction
