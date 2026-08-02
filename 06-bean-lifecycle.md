@@ -648,46 +648,6 @@ Since `OrderService` is a singleton, it's created **only once**. At that moment,
 
 > ⚠️ **Gotcha:** `PaymentSession` being prototype-scoped does **NOT** automatically mean a fresh instance is created every time a method runs inside `OrderService`. Scope only controls creation-time behavior, not runtime behavior.
 
-### 🎯 Trick Question: Will `@PreDestroy` run on `PaymentSession` when the context closes?
-
-**Answer: No.** `PaymentSession` is prototype-scoped — Spring created it, initialized it, and handed it off to `OrderService`. After that, Spring does not manage its full destruction lifecycle, regardless of who's holding the reference.
-
-### Key Learning
-
-| Statement | Correct? |
-|---|---|
-| Prototype scope means "new object per request **from Spring**" | ✅ True |
-| Prototype scope means "new object every time a singleton method runs" | ❌ False |
-
-If a singleton genuinely needs a **fresh prototype instance every time**, use one of:
-
-| Approach | How it Works |
-|---|---|
-| `ObjectProvider<T>` | Modern Spring-native factory; call `.getObject()` to fetch a new instance on demand |
-| `Provider<T>` (JSR-330) | Similar concept using standard `javax.inject`/`jakarta.inject` |
-| Lookup method injection | Abstract method overridden by Spring via CGLIB to fetch new instance |
-| `applicationContext.getBean(...)` | Direct manual lookup (couples code to `ApplicationContext`) |
-
-### Example: `ObjectProvider`
-```java
-@Component
-public class OrderService {
-
-    private final ObjectProvider<PaymentSession> paymentSessionProvider;
-
-    public OrderService(ObjectProvider<PaymentSession> paymentSessionProvider) {
-        this.paymentSessionProvider = paymentSessionProvider;
-    }
-
-    public void createOrder() {
-        PaymentSession session = paymentSessionProvider.getObject();
-        System.out.println(session);
-    }
-}
-```
-- `ObjectProvider<PaymentSession>` is injected instead of `PaymentSession` directly.
-- Each call to `createOrder()` invokes `.getObject()`, which asks Spring for a **brand-new prototype instance** every time.
-- This is the idiomatic fix for the "singleton needs fresh prototype" problem.
 
 ---
 
