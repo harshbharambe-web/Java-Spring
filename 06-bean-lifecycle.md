@@ -809,16 +809,4 @@ By moving the dependency wiring out of the constructor and into a `@PostConstruc
 - **Prototype** = Spring creates and initializes, then **hands off responsibility** — no automatic destruction.
 - Singleton depending on prototype gets **only one** prototype instance, injected once — use `ObjectProvider` for fresh instances per call.
 - `@Lazy` delays singleton creation until first actual use.
-- `@PostConstruct` can help break constructor-based circular dependencies.
-
----
-
-## ⚠️ Common Mistakes / Gotchas
-
-- ❌ Assuming object creation and initialization are the same step — they're **separate lifecycle phases**.
-- ❌ Believing `context.close()` destroys **all** beans — it only reliably destroys **singleton** beans.
-- ❌ Assuming a prototype dependency inside a singleton gives a **new instance per method call** — it doesn't; it's injected once at singleton creation time.
-- ❌ Mixing all three init/destroy mechanisms (`@PostConstruct` + `InitializingBean` + custom method) in the same bean — pick **one** for clarity.
-- ❌ Calling `setBeanName()` or other `Aware` setter methods manually, expecting it to update the Spring container — it won't; these are one-way callbacks **from** Spring **to** the bean.
-- ❌ Forgetting the `jakarta.annotation` import for `@PostConstruct`/`@PreDestroy` in Spring 6/7 (vs the old `javax.annotation`), especially outside Spring Boot where the dependency isn't auto-included.
-- ❌ Using field injection everywhere for convenience — prefer constructor injection for testability and immutability.
+  
