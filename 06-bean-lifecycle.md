@@ -785,28 +785,6 @@ Instantiation is when the constructor runs and the object is created in memory. 
 **Q3: Why does a prototype-scoped bean not get destroyed when the ApplicationContext closes?**
 Because Spring only creates and initializes prototype beans — once handed to the caller, Spring stops tracking that instance. Tracking every prototype instance forever would prevent garbage collection and cause memory leaks, so Spring deliberately does not manage the full prototype lifecycle, including destruction.
 
-**Q4: If a singleton bean depends on a prototype bean, does the singleton get a new prototype instance every time it's used?**
-No — this is a common trick question. The prototype bean is injected **once**, at the time the singleton is constructed, and that same instance is reused for the singleton's lifetime. To get a fresh prototype instance on each use, you need `ObjectProvider<T>`, lookup method injection, or manual `getBean()` calls.
 
-**Q5: What's the execution order of initialization and destruction callbacks if `@PostConstruct`, `InitializingBean`, and a custom `initMethod` are all defined on the same bean?**
-Initialization order: `@PostConstruct` → `InitializingBean.afterPropertiesSet()` → custom `initMethod`. Destruction order mirrors this: `@PreDestroy` → `DisposableBean.destroy()` → custom `destroyMethod`. In practice, only one mechanism should be used per bean to avoid confusion.
-
-**Q6: How can `@PostConstruct` help resolve a circular dependency between two beans?**
-By moving the dependency wiring out of the constructor and into a `@PostConstruct` method (paired with setter injection on one side), Spring can fully construct both beans independently first, then wire the reference afterward — breaking the constructor-time circular chain. This is a workaround, not a fix; refactoring to remove the cycle is preferred.
 
 ---
-
-## ⚡ Quick Recap
-
-- Bean lifecycle = discovery → creation → DI → Aware → init → ready → destroy.
-- `ApplicationContext` is given **class metadata**, not an object — Spring uses reflection to build `BeanDefinition`s first.
-- **Instantiation ≠ Initialization** — creation happens first, then preparation.
-- Three injection types: **constructor** (preferred), **setter**, **field**.
-- **Aware interfaces** let Spring push container info into a bean (`BeanNameAware`, `ApplicationContextAware`).
-- Three ways to hook initialization: `@PostConstruct`, `InitializingBean`, custom `initMethod`.
-- Three ways to hook destruction: `@PreDestroy`, `DisposableBean`, custom `destroyMethod`.
-- **Singleton** = Spring manages full lifecycle (create → store → reuse → destroy).
-- **Prototype** = Spring creates and initializes, then **hands off responsibility** — no automatic destruction.
-- Singleton depending on prototype gets **only one** prototype instance, injected once — use `ObjectProvider` for fresh instances per call.
-- `@Lazy` delays singleton creation until first actual use.
-  
