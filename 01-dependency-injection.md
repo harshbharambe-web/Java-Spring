@@ -103,10 +103,3 @@ sequenceDiagram
     Note over PS: PizzaService never called "new" itself
     Container-->>Client: returns fully wired PizzaService
 ```
-
-## 4. Interview Notes
-
-- **"Why constructor over field injection?"** → Immutability, fail-fast at startup, testability without a container, no reflection hacks needed.
-- **"What happens if you have two constructors?"** → Spring needs to know which one to use; mark the intended one with `@Autowired`, or Spring will error out with ambiguity (unless there's exactly one, then it's implicit).
-- **"Is `@Autowired` mandatory?"** → No, only required when there's more than one constructor, or for setter/field injection.
-- **"When would you actually use setter injection?"** → Optional dependencies, or as one of the two standard ways to break a circular dependency (see file 05).
