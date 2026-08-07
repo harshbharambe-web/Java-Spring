@@ -35,34 +35,7 @@ public class RequestId {
 }
 ```
 
-```java
-@RestController
-public class ScopeDemoController {
-    private final ConfigHolder configHolder;
-    private final ObjectProvider<RequestId> requestIdProvider;
-    // ObjectProvider is used instead of a direct field so a *new* prototype
-    // bean is fetched on each call, not just once at controller construction time.
 
-    public ScopeDemoController(ConfigHolder configHolder,
-                                ObjectProvider<RequestId> requestIdProvider) {
-        this.configHolder = configHolder;
-        this.requestIdProvider = requestIdProvider;
-    }
-
-    @GetMapping("/demo")
-    public String demo() {
-        configHolder.increment();
-        String idA = requestIdProvider.getObject().getId();
-        String idB = requestIdProvider.getObject().getId();
-
-        return "Singleton count: " + configHolder.getValue()
-             + " | Prototype A: " + idA
-             + " | Prototype B: " + idB;
-    }
-}
-```
-
-Hit `/demo` three times and observe:
 - `Singleton count` keeps incrementing (1, 2, 3...) — same `ConfigHolder` instance reused.
 - `Prototype A` and `Prototype B` are *different* UUIDs on every single call, even within the same request — a fresh `RequestId` bean is created each time `getObject()` runs.
 
