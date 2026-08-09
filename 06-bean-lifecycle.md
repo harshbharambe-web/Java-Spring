@@ -774,17 +774,6 @@ destruction callbacks
 
 ---
 
-## 🎯 Interview Questions & Answers
-
-**Q1: What is the Spring Bean Lifecycle?**
-It's the complete journey of a Spring-managed object — from BeanDefinition creation, through instantiation, dependency injection, Aware callbacks, initialization, active use, and finally destruction. Spring automates all of this instead of the developer manually managing object creation and cleanup.
-
-**Q2: What's the difference between bean instantiation and initialization?**
-Instantiation is when the constructor runs and the object is created in memory. Initialization happens *after* — it's when Spring runs callbacks (`@PostConstruct`, `InitializingBean`, custom init methods) to prepare the bean for use, often after dependencies are already injected. They are distinct, sequential phases.
-
-**Q3: Why does a prototype-scoped bean not get destroyed when the ApplicationContext closes?**
-Because Spring only creates and initializes prototype beans — once handed to the caller, Spring stops tracking that instance. Tracking every prototype instance forever would prevent garbage collection and cause memory leaks, so Spring deliberately does not manage the full prototype lifecycle, including destruction.
-
 
 
 ---
