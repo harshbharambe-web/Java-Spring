@@ -75,9 +75,3 @@ flowchart LR
     F --> G["getBean() or @Autowired\nhands out fully-wired objects"]
 ```
 
-## 4. Interview Notes
-
-- **"What is IoC vs DI?"** → IoC is the principle (control is inverted, handed to a framework); DI is the specific technique Spring uses to implement IoC (injecting dependencies rather than the object creating them itself).
-- **"What is `ApplicationContext`?"** → The interface representing the Spring IoC container — it's what actually holds, creates, and wires beans.
-- **"`BeanFactory` vs `ApplicationContext`?"** → `BeanFactory` is the basic container (lazy init, minimal features); `ApplicationContext` extends it with eager init by default, event handling, internationalization, and is what's used in virtually all real Spring apps.
-- **"Does Spring Boot remove the container?"** → No — `@SpringBootApplication` just auto-configures and bootstraps an `ApplicationContext` for you so you don't wire it manually.
