@@ -94,17 +94,3 @@ public class ExternalApiService {
 }
 ```
 
-## 3. Diagram
-
-```mermaid
-flowchart TD
-    subgraph "Your own classes"
-        A["@Component / @Service / @Repository / @Controller"] --> C[Component Scan finds & registers]
-    end
-    subgraph "Classes you don't own (3rd-party)"
-        B["@Bean method inside @Configuration"] --> D[Method return value registered manually]
-    end
-    C --> E[ApplicationContext]
-    D --> E
-```
-
