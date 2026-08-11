@@ -81,23 +81,6 @@ Bean is removed
 
 ---
 
-## 4. Step 0 — Spring Container Starts
-
-```java
-ApplicationContext context =
-        new AnnotationConfigApplicationContext(AppConfig.class);
-```
-
-- We are **not** passing an object of `AppConfig` — we're passing its **class metadata**.
-- Spring uses **reflection** to inspect the class and checks:
-  - Does it have `@Configuration`?
-  - Does it have `@ComponentScan`?
-  - Does it have `@Bean` methods?
-  - Which package should be scanned?
-  - Which bean definitions should be registered?
-
-This is where Spring starts understanding your application's structure.
-
 ---
 
 ## 5. Step 1 — BeanDefinition is Read
