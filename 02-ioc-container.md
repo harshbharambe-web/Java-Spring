@@ -63,15 +63,3 @@ public class DemoApplication {
 }
 ```
 
-## 3. Diagram
-
-```mermaid
-flowchart LR
-    A[App starts] --> B["Container scans packages\n(@ComponentScan)"]
-    B --> C["Finds @Component/@Service/@Repository\nclasses + @Bean methods"]
-    C --> D[Creates bean instances]
-    D --> E["Resolves constructor/setter\ndependencies between beans"]
-    E --> F["Beans stored in\nApplicationContext"]
-    F --> G["getBean() or @Autowired\nhands out fully-wired objects"]
-```
-
