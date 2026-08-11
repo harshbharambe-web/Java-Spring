@@ -90,16 +90,6 @@ class PizzaServiceTest {
 }
 ```
 
-## 3. Diagram
 
-```mermaid
-sequenceDiagram
-    participant Container as IoC Container
-    participant PS as PizzaService
-    participant OR as OvenRepository
-
-    Container->>OR: new OvenRepository()
-    Container->>PS: new PizzaService(ovenRepository)
-    Note over PS: PizzaService never called "new" itself
     Container-->>Client: returns fully wired PizzaService
 ```
