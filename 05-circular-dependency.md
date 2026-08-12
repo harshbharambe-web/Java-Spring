@@ -85,9 +85,3 @@ stance
     Note over A,B: Both fully wired — deadlock avoided because setters run after construction
 ```
 
-## 4. Interview Notes
-
-- **"Why does constructor injection fail on circular deps but setter injection doesn't?"** → Constructors require the full argument to exist before the object itself exists; setters run *after* the object already exists as a raw instance, so a partially-built reference can be handed over and completed later.
-- **"Is fixing it with setter injection or `@Lazy` a good idea?"** → It's a workaround, not a fix for the design smell. A genuine circular dependency between two services usually signals they should be split, or a shared piece of logic extracted into a third class.
-- **"Can circular dependency happen with prototype beans?"** → It's worse — since the container can't cache a half-built prototype the way it does for singletons mid-creation, circular prototype dependencies are generally unresolvable and will throw regardless of injection style.
-- **"How do you actually spot this bug?"** → The stack trace names `BeanCurrentlyInCreationException` explicitly and lists the cycle of bean names — read that list, it tells you the exact loop.
