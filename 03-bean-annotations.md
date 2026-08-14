@@ -79,18 +79,6 @@ public class AppConfig {
 }
 ```
 
-Anywhere else in the app, both are now injectable like any other bean:
 
-```java
-@Service
-public class ExternalApiService {
-    private final RestTemplate restTemplate;
-    private final ObjectMapper objectMapper;
-
-    public ExternalApiService(RestTemplate restTemplate, ObjectMapper objectMapper) {
-        this.restTemplate = restTemplate;
-        this.objectMapper = objectMapper;
-    }
-}
 ```
 
