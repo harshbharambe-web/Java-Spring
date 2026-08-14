@@ -51,15 +51,5 @@ public class MainApp {
 }
 ```
 
-In a Spring Boot app you rarely touch `ApplicationContext` directly — `@SpringBootApplication` bootstraps it for you, and `@ComponentScan` is implied for the package your main class lives in.
-
-```java
-@SpringBootApplication
-public class DemoApplication {
-    public static void main(String[] args) {
-        SpringApplication.run(DemoApplication.class, args);
-        // Under the hood, this still creates and returns an ApplicationContext.
-    }
-}
 ```
 
