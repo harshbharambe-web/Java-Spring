@@ -421,47 +421,7 @@ custom destroyMethod
 
 ---
 
-## 12. Full Lifecycle Summary
 
-| # | Stage |
-|---|---|
-| 1 | Spring container starts |
-| 2 | Spring reads configuration and annotations |
-| 3 | Spring creates `BeanDefinition` |
-| 4 | Spring instantiates the bean object |
-| 5 | Spring injects dependencies |
-| 6 | Spring calls `Aware` interfaces |
-| 7 | Spring runs initialization callbacks (`@PostConstruct` → `InitializingBean` → custom `initMethod`) |
-| 8 | Bean is ready to use |
-| 9 | Application uses the bean |
-| 10 | Spring runs destruction callbacks (`@PreDestroy` → `DisposableBean` → custom `destroyMethod`) |
-| 11 | Bean is removed |
-
----
-
-## 13. Singleton Bean Lifecycle
-
-By default, Spring beans are **singleton-scoped** — Spring creates only **one object** for that bean, and manages its **complete lifecycle**: creation → dependency injection → initialization → usage → destruction.
-
-```java
-@Component
-public class PaymentService {
-
-    public PaymentService() {
-        System.out.println("Constructor called");
-    }
-
-    @PostConstruct
-    public void init() {
-        System.out.println("@PostConstruct called");
-    }
-
-    @PreDestroy
-    public void destroy() {
-        System.out.println("@PreDestroy called");
-    }
-}
-```
 
 **On context start:**
 ```
