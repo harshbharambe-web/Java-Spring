@@ -77,11 +77,4 @@ public class BService {
 }
 ```
 
-**Fix 3 — the actual best fix: redesign.** If A needs B and B needs A, extract the shared behavior both need into a third class `C`, and have both A and B depend on `C` instead of each other. This removes the cycle entirely instead of working around it.
-
-stance
-    Container->>B: setAService(rawA reference)
-    Container->>A: setBService(fully built B)
-    Note over A,B: Both fully wired — deadlock avoided because setters run after construction
-```
 
