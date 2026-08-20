@@ -55,30 +55,6 @@ public class UserController {
 }
 ```
 
-**`@Bean` for a third-party class you don't control** — e.g. registering an `ObjectMapper` (Jackson) or a custom-configured `RestTemplate`:
-
-```java
-@Configuration
-public class AppConfig {
-
-    // ObjectMapper is a Jackson library class — you can't annotate it with @Component,
-    // you don't own its source code.
-    @Bean
-    public ObjectMapper objectMapper() {
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.registerModule(new JavaTimeModule());
-        return mapper;
-    }
-
-    @Bean
-    public RestTemplate restTemplate(RestTemplateBuilder builder) {
-        return builder
-            .setConnectTimeout(Duration.ofSeconds(5))
-            .build();
-    }
-}
-```
-
 
 ```
 
