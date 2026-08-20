@@ -41,13 +41,4 @@ public class RequestId {
 
 **Why `ObjectProvider` and not direct injection?** If you just did `private final RequestId requestId;` via constructor injection, Spring would inject *one* prototype instance at controller-creation time (since the controller itself is a singleton, created once) — and you'd be stuck reusing that one instance forever. `ObjectProvider<RequestId>` defers the `getBean()` call until you actually invoke `.getObject()`, so you genuinely get a new one each time.
 
-## 3. Diagram
 
-```mermaid
-flowchart TD
-    Container["IoC Container"]
-    Container -->|"1 instance, shared"| S["Singleton Bean\n(e.g. ConfigHolder)"]
-    Container -->|"new instance each getBean() call"| P1["Prototype Bean #1"]
-    Container -->|"new instance each getBean() call"| P2["Prototype Bean #2"]
-    Container -->|"new instance each getBean() call"| P3["Prototype Bean #3"]
-```
