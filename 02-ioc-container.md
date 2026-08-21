@@ -36,20 +36,3 @@ public class Car {
     public String drive() { return engine.start() + " -> Car driving"; }
 }
 
-public class MainApp {
-    public static void main(String[] args) {
-        // This one line does steps 1-3 above: scan, create, wire.
-        ApplicationContext context =
-            new AnnotationConfigApplicationContext(AppConfig.class);
-
-        Car car = context.getBean(Car.class);
-        System.out.println(car.drive()); // "Engine started -> Car driving"
-
-        // Notice: nowhere did we write `new Car(new Engine())`.
-        // The container built the whole graph for us.
-    }
-}
-```
-
-```
-
