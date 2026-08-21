@@ -40,21 +40,3 @@ public class UserService {
     public String getUser(int id) { return userRepository.findUser(id); }
 }
 
-@RestController
-public class UserController {
-    private final UserService userService;
-
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
-
-    @GetMapping("/user/{id}")
-    public String getUser(@PathVariable int id) {
-        return userService.getUser(id);
-    }
-}
-```
-
-
-```
-
