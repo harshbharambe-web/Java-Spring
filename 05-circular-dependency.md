@@ -70,11 +70,4 @@ public class AService {
     // The real BService is only fully resolved the first time a method is called on it.
 }
 
-@Component
-public class BService {
-    private final AService aService;
-    public BService(AService aService) { this.aService = aService; }
-}
-```
-
 
