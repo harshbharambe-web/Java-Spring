@@ -19,24 +19,3 @@ These are all the *same mechanism* underneath (`@Component`) — the specific on
 
 > Analogy: `@Component` is like putting a "hire me" sticker on your own resume — the container finds you during its scan. `@Bean` is for hiring someone who already has a different job elsewhere (a third-party class) — you personally introduce them to the container.
 
-## 2. Code Demo
-
-**Stereotype annotations (your own code):**
-
-```java
-@Repository
-public class UserRepository {
-    public String findUser(int id) { return "User#" + id; }
-}
-
-@Service
-public class UserService {
-    private final UserRepository userRepository;
-
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
-
-    public String getUser(int id) { return userRepository.findUser(id); }
-}
-
