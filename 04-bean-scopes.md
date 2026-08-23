@@ -39,6 +39,3 @@ public class RequestId {
 - `Singleton count` keeps incrementing (1, 2, 3...) — same `ConfigHolder` instance reused.
 - `Prototype A` and `Prototype B` are *different* UUIDs on every single call, even within the same request — a fresh `RequestId` bean is created each time `getObject()` runs.
 
-**Why `ObjectProvider` and not direct injection?** If you just did `private final RequestId requestId;` via constructor injection, Spring would inject *one* prototype instance at controller-creation time (since the controller itself is a singleton, created once) — and you'd be stuck reusing that one instance forever. `ObjectProvider<RequestId>` defers the `getBean()` call until you actually invoke `.getObject()`, so you genuinely get a new one each time.
-
-
