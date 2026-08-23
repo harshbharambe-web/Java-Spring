@@ -57,17 +57,7 @@ public class BService {
 // Works — but this is treating a symptom. A circular dependency
 // usually means A and B are too tightly coupled and should be redesigned.
 ```
-
-**Fix 2 — `@Lazy` (defers resolution of one side until it's actually used):**
-
-```java
-@Component
-public class AService {
-    private final BService bService;
-
-    public AService(@Lazy BService bService) { this.bService = bService; }
-    // Spring injects a proxy here instead of the real BService immediately.
-    // The real BService is only fully resolved the first time a method is called on it.
+thod is called on it.
 }
 
 
