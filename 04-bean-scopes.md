@@ -27,15 +27,3 @@ public class ConfigHolder {
     public int getValue() { return value; }
 }
 
-@Component
-@Scope("prototype")
-public class RequestId {
-    private final String id = UUID.randomUUID().toString();
-    public String getId() { return id; }
-}
-```
-
-
-- `Singleton count` keeps incrementing (1, 2, 3...) — same `ConfigHolder` instance reused.
-- `Prototype A` and `Prototype B` are *different* UUIDs on every single call, even within the same request — a fresh `RequestId` bean is created each time `getObject()` runs.
-
