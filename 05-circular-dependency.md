@@ -47,8 +47,7 @@ public class AService {
     public void setBService(BService bService) { this.bService = bService; }
 }
 
-@Component
-public class BService {
+
     private AService aService;
 
     @Autowired
